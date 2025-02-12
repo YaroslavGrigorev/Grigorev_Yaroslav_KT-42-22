@@ -33,5 +33,5 @@ try
 }
 catch(Exception ex)
 {
-    logger.Error(ex, "Остоновка программы из-зи ");
+    logger.Error(ex, "Остоновка программы из-зи исключения");
 }
