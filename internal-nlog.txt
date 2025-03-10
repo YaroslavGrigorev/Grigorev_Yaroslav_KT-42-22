@@ -1,0 +1,10 @@
+2025-03-10 13:34:11.1662 Info Registered target NLog.Targets.FileTarget(Name=my-file)
+2025-03-10 13:34:11.2142 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.4.0.3182. Product version: 5.4.0+4d45d445601312040107cbe2ac00e56c4bf4a60b. GlobalAssemblyCache: False
+2025-03-10 13:34:11.2448 Info Validating config: TargetNames=my-file, ConfigItems=24 ConfigSection=NLog
+2025-03-10 13:34:11.2910 Info Configuration initialized.
+2025-03-10 13:34:11.6044 Info Validating config: TargetNames=my-file, ConfigItems=24 ConfigSection=NLog
+2025-03-10 13:49:06.8528 Info Registered target NLog.Targets.FileTarget(Name=my-file)
+2025-03-10 13:49:06.8785 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.4.0.3182. Product version: 5.4.0+4d45d445601312040107cbe2ac00e56c4bf4a60b. GlobalAssemblyCache: False
+2025-03-10 13:49:06.9018 Info Validating config: TargetNames=my-file, ConfigItems=24 ConfigSection=NLog
+2025-03-10 13:49:06.9446 Info Configuration initialized.
+2025-03-10 13:49:07.2306 Info Validating config: TargetNames=my-file, ConfigItems=24 ConfigSection=NLog
