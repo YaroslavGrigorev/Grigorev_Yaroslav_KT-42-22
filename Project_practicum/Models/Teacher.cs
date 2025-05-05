@@ -30,6 +30,8 @@ namespace Project_practicum.Models
 
         public virtual Department Department { get; set; } // Связь с кафедрой
 
+        public virtual Department HeadingDepartment { get; set; } // Связь с кафедрой
+
         public virtual ICollection<Discipline> Disciplines { get; set; } = new List<Discipline>();
         public virtual ICollection<Load> Loads { get; set; } = new List<Load>();
 

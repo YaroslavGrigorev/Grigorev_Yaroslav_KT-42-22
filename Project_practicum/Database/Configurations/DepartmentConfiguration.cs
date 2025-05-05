@@ -18,10 +18,14 @@ namespace Project_practicum.Database.Configurations
             builder.Property(d => d.FoundedDate)
                 .IsRequired();
 
-            builder.HasMany(d => d.Teachers)
-                .WithOne(t => t.Department)
-                .HasForeignKey(t => t.DepartmentId)
-                .OnDelete(DeleteBehavior.Restrict);
+            // Связь 1:1 между Department.Head и Teacher.HeadingDepartment
+            builder.HasOne(d => d.Head)
+                   .WithOne(t => t.HeadingDepartment)
+                   .HasForeignKey<Department>(d => d.HeadId)
+                   .OnDelete(DeleteBehavior.Restrict); // Или другой подходящий DeleteBehavior
+
+            // Уникальность HeadId для обеспечения 1:1
+            builder.HasIndex(d => d.HeadId).IsUnique();
         }
     }
 }
