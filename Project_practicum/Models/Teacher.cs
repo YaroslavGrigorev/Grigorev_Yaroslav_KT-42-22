@@ -1,39 +1,64 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 
 namespace Project_practicum.Models
 {
     public class Teacher
     {
-        [Key]
+        // Id
         public int Id { get; set; }
 
-        [Required]
+        //ФИО
         public string FirstName { get; set; }
-
-        [Required]
         public string LastName { get; set; }
 
+        // Ученая степень
         public int DegreeId { get; set; }
-
-        [ForeignKey("DegreeId")]
         public virtual Degree Degree { get; set; }
 
+        // Должность
         public int PositionId { get; set; }
-
-        [ForeignKey("PositionId")]
         public virtual Position Position { get; set; }
 
-        public int? DepartmentId { get; set; } // Добавлено свойство для связи с кафедрой
+        // Кафедра
+        public int DepartmentId { get; set; }
+        public virtual Department Department { get; set; }
 
-        [ForeignKey("DepartmentId")]
+        public bool IsValidTeacherFirstName()
+        {
+            return !string.IsNullOrEmpty(FirstName) &&
+                   Regex.IsMatch(FirstName, @"^[a-zA-Zа-яА-ЯёЁ]+$");
+        }
 
-        public virtual Department Department { get; set; } // Связь с кафедрой
+        // Проверка фамилии
+        public bool IsValidTeacherLastName()
+        {
+            return !string.IsNullOrEmpty(LastName) &&
+                   Regex.IsMatch(LastName, @"^[a-zA-Zа-яА-ЯёЁ]+$");
+        }
 
-        public virtual Department HeadingDepartment { get; set; } // Связь с кафедрой
+        // Проверка числовых идентификаторов
+        public bool IsValidTeacherDegree()
+        {
+            return DegreeId > 0;
+        }
 
-        public virtual ICollection<Discipline> Disciplines { get; set; } = new List<Discipline>();
-        public virtual ICollection<Load> Loads { get; set; } = new List<Load>();
+        public bool IsValidTeacherDepartment()
+        {
+            return DepartmentId > 0;
+        }
+
+        public bool IsValidTeacherPosition()
+        {
+            return PositionId > 0;
+        }
+
+        // Проверка строки, можно ли её преобразовать в число
+        public static bool IsValidNumberInput(string input)
+        {
+            return int.TryParse(input, out int result);
+        }
 
     }
 }

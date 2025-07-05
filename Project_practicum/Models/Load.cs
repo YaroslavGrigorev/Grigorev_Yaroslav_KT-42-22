@@ -5,20 +5,39 @@ namespace Project_practicum.Models
 {
     public class Load
     {
-        [Key]
         public int Id { get; set; }
 
         public int TeacherId { get; set; }
 
-        [ForeignKey("TeacherId")]
         public virtual Teacher Teacher { get; set; }
 
         public int DisciplineId { get; set; }
 
-        [ForeignKey("DisciplineId")]
         public virtual Discipline Discipline { get; set; }
 
-        public int Hours { get; set; } // Нагрузка в часах
+        public int Hours { get; set; }
+
+        // Проверка числовых идентификаторов
+        public bool IsValidLoadTeacher()
+        {
+            return TeacherId > 0;
+        }
+
+        public bool IsValidLoadDiscipline()
+        {
+            return DisciplineId > 0;
+        }
+
+        public bool IsValidHours()
+        {
+            return Hours >= 0;
+        }
+
+        // Проверка строки, можно ли её преобразовать в число
+        public static bool IsValidNumberInput(string input)
+        {
+            return int.TryParse(input, out int result);
+        }
 
     }
 }

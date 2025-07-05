@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Project_practicum.Database;
@@ -11,9 +12,11 @@ using Project_practicum.Database;
 namespace Project_practicum.Migrations
 {
     [DbContext(typeof(UniversityDBContext))]
-    partial class UniversityDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250619004226_Fix_4_final")]
+    partial class Fix_4_final
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,99 +46,77 @@ namespace Project_practicum.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("Department_Id")
-                        .HasComment("Id факультета");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("FoundedDate")
-                        .HasColumnType("timestamp")
-                        .HasColumnName("Founded_Date")
-                        .HasComment("Дата основания факультета");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int?>("HeadId")
-                        .HasColumnType("integer")
-                        .HasColumnName("Head_Id")
-                        .HasComment("Id зав. кафедры");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar")
-                        .HasColumnName("Name")
-                        .HasComment("Название факультета");
+                        .HasColumnType("text");
 
-                    b.HasKey("Id")
-                        .HasName("pl_Departments_department_id");
+                    b.HasKey("Id");
 
                     b.HasIndex("HeadId")
                         .IsUnique();
 
-                    b.HasIndex(new[] { "HeadId" }, "idx_Departments_fk_f_head_id");
-
-                    b.ToTable("Departments", (string)null);
+                    b.ToTable("Departments");
                 });
 
             modelBuilder.Entity("Project_practicum.Models.Discipline", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("Discipline_Id")
-                        .HasComment("Id дисциплины");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("LoadHours")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar")
-                        .HasColumnName("Discipline_Name")
-                        .HasComment("Название дисциплины");
+                        .HasColumnType("text");
 
-                    b.HasKey("Id")
-                        .HasName("pl_Disciplines_discipline_id");
+                    b.Property<int>("TeacherId")
+                        .HasColumnType("integer");
 
-                    b.HasIndex("Name")
-                        .HasDatabaseName("idx_Disciplines_name");
+                    b.HasKey("Id");
 
-                    b.ToTable("Disciplines", (string)null);
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("Disciplines");
                 });
 
             modelBuilder.Entity("Project_practicum.Models.Load", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("Load_Id")
-                        .HasComment("Id нагрузки");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("DisciplineId")
-                        .HasColumnType("int4")
-                        .HasColumnName("Discipline_Id")
-                        .HasComment("Id дисциплины");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Hours")
-                        .HasColumnType("int4")
-                        .HasColumnName("Hours")
-                        .HasComment("Количество часов нагрузки");
+                        .HasColumnType("integer");
 
                     b.Property<int>("TeacherId")
-                        .HasColumnType("int4")
-                        .HasColumnName("Teacher_Id")
-                        .HasComment("Id преподавателя");
+                        .HasColumnType("integer");
 
-                    b.HasKey("Id")
-                        .HasName("pl_Loads_load_id");
+                    b.HasKey("Id");
 
-                    b.HasIndex(new[] { "DisciplineId" }, "idx_Loads_fk_f_discipline_id");
+                    b.HasIndex("DisciplineId");
 
-                    b.HasIndex(new[] { "TeacherId" }, "idx_Loads_fk_f_teacher_id");
+                    b.HasIndex("TeacherId");
 
-                    b.ToTable("Loads", (string)null);
+                    b.ToTable("Loads");
                 });
 
             modelBuilder.Entity("Project_practicum.Models.Position", b =>
@@ -159,81 +140,72 @@ namespace Project_practicum.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("Teacher_Id")
-                        .HasComment("Id преподавателя");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("DegreeId")
-                        .HasColumnType("int4")
-                        .HasColumnName("Degree_Id")
-                        .HasComment("Id ученой степени");
+                        .HasColumnType("integer");
 
                     b.Property<int>("DepartmentId")
-                        .HasColumnType("int4")
-                        .HasColumnName("Department_Id")
-                        .HasComment("Id кафедры");
+                        .HasColumnType("integer");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar")
-                        .HasColumnName("First_Name")
-                        .HasComment("Имя преподавателя");
+                        .HasColumnType("text");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar")
-                        .HasColumnName("Last_Name")
-                        .HasComment("Фамилия преподавателя");
+                        .HasColumnType("text");
 
                     b.Property<int>("PositionId")
-                        .HasColumnType("int4")
-                        .HasColumnName("Position_Id")
-                        .HasComment("Id занимаемой должности");
+                        .HasColumnType("integer");
 
-                    b.HasKey("Id")
-                        .HasName("pl_Teachers_teacher_id");
+                    b.HasKey("Id");
+
+                    b.HasIndex("DegreeId");
+
+                    b.HasIndex("DepartmentId");
 
                     b.HasIndex("PositionId");
 
-                    b.HasIndex(new[] { "DegreeId" }, "idx_Teachers_fk_f_degree_id");
-
-                    b.HasIndex(new[] { "DepartmentId" }, "idx_Teachers_fk_f_department_id");
-
-                    b.HasIndex(new[] { "DegreeId" }, "idx_Teachers_fk_f_position_id");
-
-                    b.ToTable("Teachers", (string)null);
+                    b.ToTable("Teachers");
                 });
 
             modelBuilder.Entity("Project_practicum.Models.Department", b =>
                 {
                     b.HasOne("Project_practicum.Models.Teacher", "Head")
-                        .WithOne()
+                        .WithOne("HeadingDepartment")
                         .HasForeignKey("Project_practicum.Models.Department", "HeadId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .HasConstraintName("fk_f_head_id");
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Head");
+                });
+
+            modelBuilder.Entity("Project_practicum.Models.Discipline", b =>
+                {
+                    b.HasOne("Project_practicum.Models.Teacher", "Teacher")
+                        .WithMany("Disciplines")
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("Project_practicum.Models.Load", b =>
                 {
                     b.HasOne("Project_practicum.Models.Discipline", "Discipline")
-                        .WithMany()
+                        .WithMany("Loads")
                         .HasForeignKey("DisciplineId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_f_discipline_id");
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Project_practicum.Models.Teacher", "Teacher")
-                        .WithMany()
+                        .WithMany("Loads")
                         .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_f_teacher_id");
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Discipline");
 
@@ -246,28 +218,45 @@ namespace Project_practicum.Migrations
                         .WithMany()
                         .HasForeignKey("DegreeId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_f_degree_id");
+                        .IsRequired();
 
                     b.HasOne("Project_practicum.Models.Department", "Department")
-                        .WithMany()
+                        .WithMany("Teachers")
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_f_department_id");
+                        .IsRequired();
 
                     b.HasOne("Project_practicum.Models.Position", "Position")
                         .WithMany()
                         .HasForeignKey("PositionId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_f_position_id");
+                        .IsRequired();
 
                     b.Navigation("Degree");
 
                     b.Navigation("Department");
 
                     b.Navigation("Position");
+                });
+
+            modelBuilder.Entity("Project_practicum.Models.Department", b =>
+                {
+                    b.Navigation("Teachers");
+                });
+
+            modelBuilder.Entity("Project_practicum.Models.Discipline", b =>
+                {
+                    b.Navigation("Loads");
+                });
+
+            modelBuilder.Entity("Project_practicum.Models.Teacher", b =>
+                {
+                    b.Navigation("Disciplines");
+
+                    b.Navigation("HeadingDepartment")
+                        .IsRequired();
+
+                    b.Navigation("Loads");
                 });
 #pragma warning restore 612, 618
         }

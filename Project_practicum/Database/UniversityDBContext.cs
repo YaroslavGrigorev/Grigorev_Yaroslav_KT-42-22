@@ -7,12 +7,12 @@ namespace Project_practicum.Database
 {
     public class UniversityDBContext : DbContext
     {
-        DbSet<Degree> Degrees { get; set; }
-        DbSet<Department> Departments { get; set; }
-        DbSet<Discipline> Disciplines { get; set; }
-        DbSet<Load> Loads { get; set; }
-        DbSet<Position> Positions { get; set; }
-        DbSet<Teacher> Teachers { get; set; }
+        public DbSet<Degree> Degrees { get; set; }
+        public DbSet<Department> Departments { get; set; }
+        public DbSet<Discipline> Disciplines { get; set; }
+        public DbSet<Load> Loads { get; set; }
+        public DbSet<Position> Positions { get; set; }
+        public DbSet<Teacher> Teachers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
