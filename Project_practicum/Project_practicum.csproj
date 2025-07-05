@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Middlewares\**" />
+    <Content Remove="Middlewares\**" />
+    <EmbeddedResource Remove="Middlewares\**" />
+    <None Remove="Middlewares\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.20" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.20">
       <PrivateAssets>all</PrivateAssets>
@@ -52,7 +59,6 @@
 
   <ItemGroup>
     <Folder Include="Filters\DepartmentFilters\" />
-    <Folder Include="Middlewares\" />
   </ItemGroup>
 
 </Project>
