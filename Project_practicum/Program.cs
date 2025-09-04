@@ -4,6 +4,7 @@ using NLog;
 using NLog.Web;
 using Project_practicum.Database;
 using Project_practicum.ServiceExtencions;
+using Project_practicum.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,7 +40,7 @@ try
         app.UseSwaggerUI();
     }
 
-    //app.UseMiddleware<ExceptionHandlerMiddleware>();
+    app.UseMiddleware<Project_practicum.Middlewares.ExceptionHandlerMiddleware>();
 
     app.UseAuthorization();
 

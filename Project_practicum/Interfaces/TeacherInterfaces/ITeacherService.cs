@@ -67,12 +67,32 @@ namespace Project_practicum.Interfaces.TeacherInterfaces
             return teacher;
         }
 
-        public async Task<Teacher> UpdateTeacherAsync(Teacher teacher, CancellationToken cancellationToken)
+        /*public async Task<Teacher> UpdateTeacherAsync(Teacher teacher, CancellationToken cancellationToken)
         {
             _dbContext.Teachers.Update(teacher);
             await _dbContext.SaveChangesAsync(cancellationToken);
             return teacher;
+        }*/
+
+        public async Task<Teacher> UpdateTeacherAsync(Teacher teacher, CancellationToken cancellationToken)
+        {
+            var existingTeacher = await _dbContext.Teachers.FindAsync(teacher.Id);
+
+            if (existingTeacher == null)
+            {
+                throw new ArgumentException($"Teacher with Id {teacher.Id} not found.");
+            }
+
+            // Обновляем свойства существующей сущности
+            existingTeacher.FirstName = teacher.FirstName;
+            existingTeacher.LastName = teacher.LastName;
+            existingTeacher.DepartmentId = teacher.DepartmentId;
+
+            await _dbContext.SaveChangesAsync(cancellationToken);
+
+            return existingTeacher; // Возвращаем обновленную сущность
         }
+
 
         public async Task<bool> DeleteTeacherAsync(int id, CancellationToken cancellationToken)
         {

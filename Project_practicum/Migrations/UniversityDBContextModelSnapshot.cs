@@ -36,7 +36,7 @@ namespace Project_practicum.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Degrees");
+                    b.ToTable("Degrees", (string)null);
                 });
 
             modelBuilder.Entity("Project_practicum.Models.Department", b =>
@@ -152,7 +152,7 @@ namespace Project_practicum.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Positions");
+                    b.ToTable("Positions", (string)null);
                 });
 
             modelBuilder.Entity("Project_practicum.Models.Teacher", b =>

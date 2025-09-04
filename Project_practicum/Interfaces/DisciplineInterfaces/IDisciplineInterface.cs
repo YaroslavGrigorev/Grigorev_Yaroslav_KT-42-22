@@ -80,9 +80,25 @@ namespace Project_practicum.Interfaces.DisciplineInterfaces
 
         public async Task<Discipline> UpdateDisciplineAsync(Discipline discipline, CancellationToken cancellationToken)
         {
-            _dbContext.Disciplines.Update(discipline);
+            /*_dbContext.Disciplines.Update(discipline);
             await _dbContext.SaveChangesAsync(cancellationToken);
-            return discipline;
+            return discipline;*/
+
+            // Находим существующую дисциплину по Id
+            var existingDiscipline = await _dbContext.Disciplines
+                .FirstOrDefaultAsync(d => d.Id == discipline.Id, cancellationToken);
+            if (existingDiscipline == null)
+            {
+                // Если дисциплина не найдена, можно выбросить исключение или вернуть null
+                // В данном случае, для Update, логично, что сущность должна существовать
+                throw new ArgumentException($"Discipline with Id {discipline.Id} not found.");
+            }
+            // Обновляем свойства существующей сущности
+            existingDiscipline.Name = discipline.Name;
+            // EF Core автоматически отслеживает изменения в existingDiscipline,
+            // поэтому достаточно просто сохранить изменения.
+            await _dbContext.SaveChangesAsync(cancellationToken);
+            return existingDiscipline;
         }
 
         public async Task<bool> DeleteDisciplineAsync(int id, CancellationToken cancellationToken)
